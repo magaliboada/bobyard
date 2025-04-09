@@ -47,9 +47,7 @@ class CommentPostgresRepository(CommentRepository):
             raise CommentNotLiked(str(comment_id))
 
     def update_text(self, comment_id: int, text: str) -> None:
-        try:
-            comment_model = CommentModel.objects.get(id=comment_id)
-            comment_model.text = text
-            comment_model.save()
-        except CommentModel.DoesNotExist:
+        count = CommentModel.objects.filter(id=comment_id).update(text=text)
+
+        if count == 0:
             raise CommentNotFound(str(comment_id))

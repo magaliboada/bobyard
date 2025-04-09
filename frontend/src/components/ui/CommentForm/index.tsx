@@ -10,7 +10,18 @@ const CommentForm: React.FC<CommentFormProps> = ({ onSubmit }) => {
         <Grid templateColumns="repeat(1, 1fr)" gap="6" backgroundColor="var(--chakra-colors-bg-panel)" p="4" borderRadius="lg" w="100%">
             <VStack alignItems="flex-start">
                 <Text fontSize="md">Add a comment</Text>
-                <Textarea value={text} onChange={(e) => setText(e.target.value)} borderWidth="1px" borderColor="var(--chakra-colors-border-panel)" />
+                <Textarea value={text} onChange={(e) => setText(e.target.value)} borderWidth="1px" borderColor="var(--chakra-colors-border-panel)"
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            onSubmit(text)
+                            setText('')
+                        }
+                        if (e.key === 'Escape') {
+                            setText('')
+                        }
+                    }}
+                />
             </VStack>
 
             <Button onClick={() => { onSubmit(text); setText('') }} disabled={text.length === 0} colorPalette={'blue'} >Submit</Button>

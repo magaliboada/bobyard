@@ -10,4 +10,5 @@ class UpdateComment:
         self.comment_repository = comment_repository
 
     def execute(self, comment_id: int, text: str) -> None:
+        print(f"Updating comment {comment_id} with text {text}")
         self.comment_repository.update_text(comment_id, text)
